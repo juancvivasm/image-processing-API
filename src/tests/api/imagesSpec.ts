@@ -93,16 +93,41 @@ describe('Tests for images', () => {
     })
 
     describe('Tests to process the image', () => {
-        it('resizing the image: palmtunnel', async () => {
-            const sourceFile = 'images/palmtunnel.jpg'
-            const newFile = 'thumb/palmtunnel-200x200-resized-compressed.jpeg'
-            const width = 200
-            const height = 200
-            if (fs.existsSync(newFile)) {
-                fs.unlinkSync(newFile)
-            }
-            const r = await resize.resize(sourceFile, newFile, width, height)
-            expect(r).toEqual(true)
+        describe('Processing the image successfully', () => {
+            it('resizing the image: palmtunnel', async () => {
+                const sourceFile = 'images/palmtunnel.jpg'
+                const newFile =
+                    'thumb/palmtunnel-200x200-resized-compressed.jpeg'
+                const width = 200
+                const height = 200
+                if (fs.existsSync(newFile)) {
+                    fs.unlinkSync(newFile)
+                }
+                const r = await resize.resize(
+                    sourceFile,
+                    newFile,
+                    width,
+                    height
+                )
+                expect(r).toEqual(true)
+            })
+        })
+
+        describe("Problems processing an image that doesn't exist", () => {
+            it('resizing the image: Venezuela', async () => {
+                const sourceFile = 'images/Venezuela.jpg'
+                const newFile =
+                    'thumb/Venezuela-200x200-resized-compressed.jpeg'
+                const width = 200
+                const height = 200
+                const r = await resize.resize(
+                    sourceFile,
+                    newFile,
+                    width,
+                    height
+                )
+                expect(r).toEqual(false)
+            })
         })
     })
 })
